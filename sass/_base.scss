@@ -13,3 +13,30 @@ $color-grey-dark-2: #6D5D4B;
 // FONT VARIABLES
 $font-primary: 'Nunito', sans-serif;
 $font-display: 'Josefin Sans', sans-serif;
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+body {
+    font-family: $font-primary;
+    color: $color-grey-dark-2;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+.container {
+    display: grid;
+
+    grid-template-rows: 80vh min-content 40vw repeat(3, min-content); // ipv min-content kun je ook auto kiezen, doet hier hetzelfde. Rows krijgen geen naam, de kolommen zijn belangrijker en die gebruik je dan ook om je elementen te plaatsen
+    grid-template-columns: [sidebar-start] 8rem [sidebar-end full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end] ) [center-end] minmax(6rem, 1fr) [full-end];    // De 8rem is voor de sidebar. Daarna gaat het om 8 kolommen die zijn gecentreerd in het midden en alleen de inhoud (bv van features) zit er eigenlijk echt in. Met minmax zijn ze minimaal zo breed als de inhoud nodig heeft en maximaal nog steeds maar 140px. Jonas maakt een heel ding van die 8 kolommen, maar het zijn er natuurlijk gewoon 11: 1 sidebar, twee brede aan weerszijden en dan 8 gelijke in het midden. Sommige secties gebruiken alleen die 8.
+}
