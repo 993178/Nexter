@@ -14,6 +14,12 @@ $color-grey-dark-2: #6D5D4B;
 $font-primary: 'Nunito', sans-serif;
 $font-display: 'Josefin Sans', sans-serif;
 
+// MEDIA QUERIES
+$bp-XL: 75em; // 1200px
+$bp-L: 62.5em; // 1000px
+$bp-M: 50em; // 800px
+$bp-S: 37.5em; //600px
+
 *,
 *::before,
 *::after {
@@ -25,6 +31,8 @@ $font-display: 'Josefin Sans', sans-serif;
 html {
     box-sizing: border-box;
     font-size: 62.5%;
+
+    @media only screen and (max-width: $bp-XL) { font-size: 50% }
 }
 
 body {
@@ -39,4 +47,15 @@ body {
 
     grid-template-rows: 80vh min-content 40vw repeat(3, min-content); // ipv min-content kun je ook auto kiezen, doet hier hetzelfde. Rows krijgen geen naam, de kolommen zijn belangrijker en die gebruik je dan ook om je elementen te plaatsen
     grid-template-columns: [sidebar-start] 8rem [sidebar-end full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end] ) [center-end] minmax(6rem, 1fr) [full-end];    // De 8rem is voor de sidebar. Daarna gaat het om 8 kolommen die zijn gecentreerd in het midden en alleen de inhoud (bv van features) zit er eigenlijk echt in. Met minmax zijn ze minimaal zo breed als de inhoud nodig heeft en maximaal nog steeds maar 140px. Jonas maakt een heel ding van die 8 kolommen, maar het zijn er natuurlijk gewoon 11: 1 sidebar, twee brede aan weerszijden en dan 8 gelijke in het midden. Sommige secties gebruiken alleen die 8.
+
+    // bovenstaande twee regels zou je ook kunnen doen met de shorthand:    grid-template: eerst-je-rows / dan-je-columns   maar dat kreeg Jonas hier niet voor elkaar, al lukte het wel in de gallery. Hij vindt het niet handig dat allemaal in één regel te plempen
+
+    @media only screen and (max-width: $bp-L) { 
+        grid-template-rows: 6rem 80vh min-content 40vw repeat(3, min-content);
+        grid-template-columns: [full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end] ) [center-end] minmax(6rem, 1fr) [full-end];    // voor de media query gooien we er dus doodleuk een kolom (met bijbehorende grid line namen) uit en voegen ipv daarvan een rij van 6rem toe. De echte mafiamentaliteit. 
+    } // Ook: omdat al die column grid lines namen hebben ipv nummers, blijft de verdere layout intact! Anders verschuiven de nummers en raken al die elementen van de leg. Jonas heeft tnt vooral elementen in de juiste kolommen geplaatst en mbv de maat gezorgd dat eea onder elkaar op verschillende rijen terecht kwam, dus een rij toevoegen heeft niet zulke vervelende effecten (als je ook dingen op de rijen plaatst, moet je die grid lines ook benoemen...).
+
+    @media only screen and (max-width: $bp-M) {
+        grid-template-rows: 6rem calc(100vh - 6rem); // 40vw was niet langer gewenst voor story__content, dus werd dat óók al min-content, maar dat doet de implicit grid automatisch al, dus houden we het nu bij twee specifiek gedefinieerde rows en laten CSS de rest zelf uitzoeken
+    } 
 }
